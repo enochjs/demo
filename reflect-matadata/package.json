@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "compile": "tsc -w -p .",
+    "start": "nodemon dist/index.js"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
