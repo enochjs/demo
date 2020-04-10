@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+    let i = 0
+    const channel = new MessageChannel();
+    const port = channel.port2;
+    channel.port1.onmessage = function testOnMessage(data) {
+      let div = document.createElement('div')
+      div.innerHTML = `data${i}`
+      document.body.appendChild(div)
+      i++
+      if (i<100) {
+        port.postMessage(`data${i}`)
+      }
+      console.log('........test', data)
+    };
+
+    port.postMessage('data0')
+
+</script>
+</body>
+</html>
