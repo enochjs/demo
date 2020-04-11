@@ -1,5 +1,13 @@
 ## sheduler
 
+```javascript
+// sheduler 流程介绍
+// MessageChannel
+requestHostCallback执行postmessage，js主线程结束，控制权交给浏览器，
+浏览器执行完任务，回调onmessage方法，执行performWorkUntilDeadline
+
+```
+
 ### MessageChannel
 
 ```javascript
@@ -8,6 +16,15 @@ const port = channel.port2;
 channel.port1.onmessage = performWorkUntilDeadline;
 
 // port.postMessage 代码执行完毕，主线程处于空闲状态，如果需要渲染就会执行渲染， 渲染结束，执行onmessage回调， 如果不需要渲染，执行onmessage回调
+
+//  在react通过post.postMessage()，将控制权交给浏览器，浏览器渲染页面，回调 performWorkUntilDeadline
+
+```
+
+### performWorkUntilDeadline
+```javascript
+这个方法开始时设置一个deadline，（根据fps设置  1000/fps）
+
 ```
 
 ### task
@@ -25,12 +42,5 @@ channel.port1.onmessage = performWorkUntilDeadline;
   expirationTime, // 任务结束时间 currentTime + delay + timeout（prioritytimeout）
   sortIndex, // 排序任务队列，高优先级在前，taskQueue: expirationTime， timerQueue: startTime
 }
-
-```
-
-## task workLoop
-```javascript
-
-
 
 ```
