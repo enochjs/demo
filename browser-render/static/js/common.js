@@ -1,0 +1,1 @@
+console.log('this is common js excute, time=', performance.now())
