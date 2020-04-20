@@ -125,3 +125,27 @@ const RootSuspended = 3;
 const RootSuspendedWithDelay = 4;
 const RootCompleted = 5;
 ```
+
+```javascript
+// for task 
+export type PriorityLevel = 0 | 1 | 2 | 3 | 4 | 5;
+
+// TODO: Use symbols?
+export const NoPriority = 0;
+export const ImmediatePriority = 1;
+export const UserBlockingPriority = 2;
+export const NormalPriority = 3;
+export const LowPriority = 4;
+export const IdlePriority = 5;
+```
+
+```javascript
+// for fiber
+export const ImmediatePriority: ReactPriorityLevel = 99;
+export const UserBlockingPriority: ReactPriorityLevel = 98;
+export const NormalPriority: ReactPriorityLevel = 97;
+export const LowPriority: ReactPriorityLevel = 96;
+export const IdlePriority: ReactPriorityLevel = 95;
+// NoPriority is the absence of priority. Also React-only.
+export const NoPriority: ReactPriorityLevel = 90;
+```
