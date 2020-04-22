@@ -24,7 +24,7 @@
  *   │           │             │└───────────────┘                               │
  *   │           │             │┌───────────────┐                               │
  *   │┌─────────┐│             ││ ┌────────────┐│                               │
- *   ││ a: add──┼┼─────────────┼▶ │ name: 111  ││         ┌──────────────────┐  │
+ *   ││ a: addr ┼┼─────────────┼▶ │ name: 111  ││         ┌──────────────────┐  │
  *   │└─────────┘│             ││ └────────────┘│         │                  │  │
  *   │           │             ││ ┌───────────┐ │         │                  │  │
  *   │┌─────────┐│             ││ │ setName:  │ │         │  function () {}  │  │
@@ -34,7 +34,7 @@
  *   │           │             │└───────────────┘         └──────────────────┘  │
  *   │           │             │┌───────────────┐                   ▲           │
  *   │┌─────────┐│             ││ ┌───────────┐ │                   │           │
- *   ││ c: add──┼┼─────────────┼▶ │ name: 111 │ │                   │           │
+ *   ││ c: addr ┼┼─────────────┼▶ │ name: 111 │ │                   │           │
  *   │└─────────┘│             ││ └───────────┘ │                   │           │
  *   │           │             ││ ┌───────────┐ │                   │           │
  *   │           │             ││ │ setName:  │ │                   │           │
@@ -60,20 +60,74 @@ function isObject(target) {
 }
 
 function isFunction(target) {
-  return typeof target !== 'function'
+  return typeof target === 'function'
 }
 
-function isArray(target) {
-  return Array.isArray(target)
+function getTag(value) {
+  if (value == null) {
+    return value === undefined ? '[object Undefined]' : '[object Null]'
+  }
+  return toString.call(value)
+}
+
+const dateTag = '[object Date]'
+const mapTag = '[object Map]'
+const objectTag = '[object Object]'
+const arrayTag = '[object Array]'
+const setTag = '[object Set]'
+
+function specialDeal (target, tag) {
+  const Ctor = target.constructor
+  switch (tag) {
+    case dateTag: return new Ctor(target)
+    default: return target
+  }
 }
 
 function deepClone(target) {
 
   if (isFunction(target)) {
-    return null
+    return {}
   }
 
-  if (!isObject) {
-
+  if (!isObject(target)) {
+    return target
   }
+  const tag = getTag(target)
+  if (tag === arrayTag) {
+    return target.map((item => deepClone(item)))
+  } else if (tag === objectTag) {
+    const result = Object.create(target)
+    Object.keys(target).map((key) => {
+      result[key] = isObject(target[key]) ? deepClone(target[key]) : target[key]
+    })
+    return result
+  } else {
+    return specialDeal(target, tag)
+  }
+
 }
+
+const input = [{
+  name: 1111,
+  setName: () => {},
+  date: new Date(),
+  test: [{
+    name: 'test',
+    setName: () => { console.log(1111) },
+    date: new Date('2018-03-23'),
+    test2: {
+      name: 'test2',
+      height: 'number',
+      date: new Date('2020-04-23'),
+      setName: (name) => { console.log(name) }
+    }
+  }]
+}]
+
+const result = deepClone(input)
+
+console.log('.....setName', result[0].test[0].test2.setName(3232323))
+console.log('........', JSON.stringify(result, '\n', 2))
+result[0].test[0].test2.setName = 121212
+console.log('modify name', input[0].test[0].test2.setName, result[0].test[0].test2.setName)
