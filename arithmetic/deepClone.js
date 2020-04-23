@@ -133,3 +133,8 @@ function deepClone(target) {
 // result[0].test[0].test2.date.setFullYear('2018')
 // console.log('modify name', input[0].test[0].test2.setName)
 // console.log('........result', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
+
+
+
+
+// ========================================================= proxy clone =========================================
