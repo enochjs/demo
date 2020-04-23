@@ -3,13 +3,17 @@
 // 思考：什么情况下，改了新的对象，老得对象也会被改掉
 // 答：说明两个指针只像同一个对象，并且改的是对象的属性
 // （ps: 如果改的是对象的指，老的指针指向的还是老的值，新的指向新的值，不会影响到老的， 只能是指针指向了同一个对象，并且改了对象里面的属性, 
-//  这一点很重要，意味着我copy一个对象的时候，如果他的值不是一个更深入的键值对，我只有返回当前值就好了
+//  只要不改变对象的属性就没有问题
+//  这一点很重要，意味着我copy一个对象的时候，如果他的值不是一个更深入的键值对，我只要返回当前值就好了，如果是个更深入的对象，那就是一个递归的过程
 //  如：
 //  var a = { name: 111, setName: fuction() {} }
 //  var b = { name: a.name, setName: b.setName }
 //  b.setName = 12345
 //  console.log(a.setName) ===> function () {}
 //  所以我在copy一个对象的时候，只要新建一个object, 非复杂对象 只要 复制键值对就好了
+//  根据以上说的：需要特殊处理的对象，就是这个对象有属性的，js中有属性的数据类型有： 
+//  array Map Set object[key:value] class, class 和 object [key:value] 的处理是一样的，通过Object.create() 复制 prototype
+// 
 /*   ┌──────────────────────────────────────────────────────────────────────────┐
  *   │var a = { name: 111, setName: function(){} }                              │
  *   │var b = a                                                                 │
@@ -50,17 +54,8 @@
 // 引用类型：直接返回是个地址，肯定不行，需要遍历进行继续copy
 // js 类型
 // 基本类型  string number boolean undefinded null symbol
-// 复杂类型 object：
 // 特殊对象： array，date, RegExp，function，Map，Set
 // 
-
-function isObject(target) {
-  return target !== null && typeof target === 'object'
-}
-
-function isFunction(target) {
-  return typeof target === 'function'
-}
 
 function getTag(value) {
   if (value == null) {
@@ -69,64 +64,102 @@ function getTag(value) {
   return toString.call(value)
 }
 
-const dateTag = '[object Date]'
 const mapTag = '[object Map]'
 const objectTag = '[object Object]'
 const arrayTag = '[object Array]'
 const setTag = '[object Set]'
 
-function specialDeal (target, tag) {
-  const Ctor = target.constructor
-  switch (tag) {
-    case dateTag: return new Ctor(target)
-    default: return target
-  }
-}
-
 function deepClone(target) {
-
-  if (isFunction(target)) {
-    return {}
-  }
-
-  if (!isObject(target)) {
-    return target
-  }
   const tag = getTag(target)
-  if (tag === arrayTag) {
-    return target.map((item => deepClone(item)))
-  } else if (tag === objectTag) {
-    const result = Object.create(target)
-    Object.keys(target).map((key) => {
-      result[key] = isObject(target[key]) ? deepClone(target[key]) : target[key]
-    })
-    return result
-  } else {
-    return specialDeal(target, tag)
+  let result
+  switch (tag) {
+    case arrayTag:
+      result = target.map((item) => deepClone(item))
+      break;
+    case mapTag:
+      result = new Map()
+      for (let [key, value] of target) {
+        result.set(key, deepClone(value))
+      }
+      break;
+    case setTag:
+      result = new Set()
+      target.forEach(item => {
+        result.add(deepClone(item))
+      })
+      break;
+    case objectTag:
+      result = Object.create(target)
+      Object.keys(target).forEach((key) => {
+        result[key] = deepClone(target[key])
+      })
+    default:
+      break;
   }
-
+  return result || target
 }
 
-const input = [{
-  name: 1111,
-  setName: () => {},
-  date: new Date(),
-  test: [{
-    name: 'test',
-    setName: () => { console.log(1111) },
-    date: new Date('2018-03-23'),
-    test2: {
-      name: 'test2',
-      height: 'number',
-      date: new Date('2020-04-23'),
-      setName: (name) => { console.log(name) }
-    }
-  }]
-}]
+// var input = {
+//   test: 1,
+// }
 
-const result = deepClone(input)
+// class Person {
+//   constructor(name) {
+//     this.name = name
+//   }
 
-console.log('.....setName', result[0].test[0].test2.setName(3232323))
-console.log('........', JSON.stringify(result, '\n', 2))
-result[0].test[0].test2.setName = 121212
-console.log('modify name', input[0].test[0].test2.setName, result[0].test[0].test2.setName)
+//   static testName(input) {
+//     console.log(`hello ${input} ${this.name}`)
+//   }
+
+//   setName(name) {
+//     this.name = name
+//     console.log(`this.name = ${this.name}`)
+//   }
+// }
+
+// const p1 = new Person('enochjs')
+
+// const p2 = deepClone(p1)
+
+// p2.setName
+
+// console.log('.....', p2.setName, p1.setName)
+
+// const input = [{
+//   name: 1111,
+//   setName: () => {},
+//   date: new Date(),
+//   test: [{
+//     name: 'test',
+//     setName: () => { console.log(1111) },
+//     date: new Date('2018-03-23'),
+//     test2: {
+//       name: 'test2',
+//       height: 'number',
+//       date: new Date('2020-04-23'),
+//       setName: (name) => { console.log(name) },
+//       reg: /^\d+$/,
+//     },
+//   }, {
+//     name: 'tes4',
+//     setName: () => { console.log(1111) },
+//     date: new Date('2018-03-23'),
+//     test2: {
+//       name: 'test5',
+//       height: 'number',
+//       date: new Date('2020-04-23'),
+//       setName: (name) => { console.log(name) },
+//       reg: /^\d+$/,
+//     },
+//   }]
+// }]
+
+// const result = deepClone(input)
+// result[0].test[0].test2.setName(3232323)
+// console.log('........', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
+// result[0].test[0].test2.setName = 121212
+// result[0].test[0].test2.date = `121212date`
+// result[0].test[0].test2.reg = `121212reg`
+// console.log('modify name', input[0].test[0].test2.setName, input[0].test[0].test2.reg.test(1212121))
+// console.log('........result', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
