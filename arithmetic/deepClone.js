@@ -68,11 +68,15 @@ const mapTag = '[object Map]'
 const objectTag = '[object Object]'
 const arrayTag = '[object Array]'
 const setTag = '[object Set]'
+const dateTag = '[object Date]'
 
 function deepClone(target) {
   const tag = getTag(target)
   let result
   switch (tag) {
+    case dateTag:
+      result = new target.constructor(target)
+      break;
     case arrayTag:
       result = target.map((item) => deepClone(item))
       break;
@@ -94,37 +98,11 @@ function deepClone(target) {
         result[key] = deepClone(target[key])
       })
     default:
+      result = target
       break;
   }
-  return result || target
+  return result
 }
-
-// var input = {
-//   test: 1,
-// }
-
-// class Person {
-//   constructor(name) {
-//     this.name = name
-//   }
-
-//   static testName(input) {
-//     console.log(`hello ${input} ${this.name}`)
-//   }
-
-//   setName(name) {
-//     this.name = name
-//     console.log(`this.name = ${this.name}`)
-//   }
-// }
-
-// const p1 = new Person('enochjs')
-
-// const p2 = deepClone(p1)
-
-// p2.setName
-
-// console.log('.....', p2.setName, p1.setName)
 
 // const input = [{
 //   name: 1111,
@@ -133,22 +111,11 @@ function deepClone(target) {
 //   test: [{
 //     name: 'test',
 //     setName: () => { console.log(1111) },
-//     date: new Date('2018-03-23'),
+//     date: new Date(),
 //     test2: {
 //       name: 'test2',
 //       height: 'number',
-//       date: new Date('2020-04-23'),
-//       setName: (name) => { console.log(name) },
-//       reg: /^\d+$/,
-//     },
-//   }, {
-//     name: 'tes4',
-//     setName: () => { console.log(1111) },
-//     date: new Date('2018-03-23'),
-//     test2: {
-//       name: 'test5',
-//       height: 'number',
-//       date: new Date('2020-04-23'),
+//       date: new Date(),
 //       setName: (name) => { console.log(name) },
 //       reg: /^\d+$/,
 //     },
@@ -158,8 +125,6 @@ function deepClone(target) {
 // const result = deepClone(input)
 // result[0].test[0].test2.setName(3232323)
 // console.log('........', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
-// result[0].test[0].test2.setName = 121212
-// result[0].test[0].test2.date = `121212date`
-// result[0].test[0].test2.reg = `121212reg`
-// console.log('modify name', input[0].test[0].test2.setName, input[0].test[0].test2.reg.test(1212121))
+// result[0].test[0].test2.date.setFullYear('2018')
+// console.log('modify name', input[0].test[0].test2.setName)
 // console.log('........result', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
