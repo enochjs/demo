@@ -69,11 +69,16 @@ const objectTag = '[object Object]'
 const arrayTag = '[object Array]'
 const setTag = '[object Set]'
 const dateTag = '[object Date]'
+const regTag = '[object RegExp]'
 
 function deepClone(target) {
   const tag = getTag(target)
   let result
   switch (tag) {
+    case regTag:
+      result = new target.constructor(regexp.source, reFlags.exec(regexp))
+      result.lastIndex = regexp.lastIndex
+      break
     case dateTag:
       result = new target.constructor(target)
       break;
