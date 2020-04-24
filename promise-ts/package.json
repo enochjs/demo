@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "promises-aplus-tests test_adapter.js"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
