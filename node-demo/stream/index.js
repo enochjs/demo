@@ -9,7 +9,7 @@ var showMem = function() {
   console.log('Process1: heapTotal '+format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
 }
 
-// const server = require('http').createServer();
+const server = require('http').createServer();
 
 // readfile
 // server.on('request', (req, res) => {
