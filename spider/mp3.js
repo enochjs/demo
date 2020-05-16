@@ -1,8 +1,5 @@
-const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
-const lodash = require('lodash')
 const http = require('http')
 const contentsCn = [
   { nameCn: '创世记', nameEn: 'Genesis', length: '50' },
@@ -123,19 +120,19 @@ const contentsCn = [
         if (!fs.existsSync(path.resolve(__dirname,  dirCn))) {
           fs.mkdirSync(dirCn);
         }
-        const writeStreamEn = fs.createWriteStream(path.resolve(__dirname,  `mp3/english/${nameEn}/${count + index + 1}.mp3`))
-        // const writeStreamCn = fs.createWriteStream(path.resolve(__dirname,  `mp3/chinese/${nameCn}/${count + index + 1}.mp3`))
+        // const writeStreamEn = fs.createWriteStream(path.resolve(__dirname,  `mp3/english/${nameEn}/${count + index + 1}.mp3`))
+        const writeStreamCn = fs.createWriteStream(path.resolve(__dirname,  `mp3/chinese/${nameCn}/${count + index + 1}.mp3`))
 
         console.log('.....urlEn', urlEn)
         // console.log('.....urlCn', urlCn)
-        http.get(urlEn, (res) => {
-          // console.log('res', res)
-          res.pipe(writeStreamEn)
-        })
-        // http.get(urlCn, (res) => {
+        // http.get(urlEn, (res) => {
         //   // console.log('res', res)
-        //   res.pipe(writeStreamCn)
+        //   res.pipe(writeStreamEn)
         // })
+        http.get(urlCn, (res) => {
+          // console.log('res', res)
+          res.pipe(writeStreamCn)
+        })
         return true
       }))
       console.log('.....count', count, chunkLength)
@@ -143,5 +140,6 @@ const contentsCn = [
       console.log('.....count', count)
     }
   }
+  console.log('.....end')
 })();
 

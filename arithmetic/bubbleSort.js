@@ -9,7 +9,7 @@ function bubbleSort (arr) {
       if (arr[i] > arr[j]) {
         const temp = arr[i]
         arr[i] = arr[j]
-        arr[j] = k
+        arr[j] = temp
       }
     }
   }
