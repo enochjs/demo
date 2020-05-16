@@ -4,6 +4,10 @@
     "aliyun-sdk": "^1.12.3",
     "co": "^4.6.0",
     "lodash": "^4.17.15",
-    "puppeteer": "^3.0.4"
+    "puppeteer": "^3.0.4",
+    "superagent": "^5.2.2"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2"
   }
 }

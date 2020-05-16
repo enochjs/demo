@@ -535,6 +535,14 @@ const contentsEn = [
   },
 ]
 
+const contents = contentsCn.map((item, index) => ({
+  "nameCn": item.name,
+  "nameEn": contentsEn[index].name,
+  "length": item.length,
+}))
+
+console.log(contents)
+
 // fs.readdir(path.resolve(__dirname, './src/chinese'), (err, files) => {
 //   // console.log('.....files', files.length)
 
@@ -570,37 +578,37 @@ const contentsEn = [
   
 // })
 
-fs.readdir(path.resolve(__dirname, './src/english'), (err, files) => {
-  // console.log('.....files', files.length)
+// fs.readdir(path.resolve(__dirname, './src/english'), (err, files) => {
+//   // console.log('.....files', files.length)
 
-  files.forEach(file => {
-    // const result = eval(require(file))
-    const result = contentsEn.find(item => item.name === file.split('.')[0])
-    fs.readFile(path.resolve(__dirname, `./src/english/${file}`), (err, data) => {
-      const obj = JSON.parse(data.toString())
+//   files.forEach(file => {
+//     // const result = eval(require(file))
+//     const result = contentsEn.find(item => item.name === file.split('.')[0])
+//     fs.readFile(path.resolve(__dirname, `./src/english/${file}`), (err, data) => {
+//       const obj = JSON.parse(data.toString())
 
-      let names = ''
-      const numbers = []
+//       let names = ''
+//       const numbers = []
 
-      Object.keys(obj).forEach(key => {
-        const splits = key.split('-')
-        names = splits[0]
-        numbers.push(Number(splits[1]))
-      })
+//       Object.keys(obj).forEach(key => {
+//         const splits = key.split('-')
+//         names = splits[0]
+//         numbers.push(Number(splits[1]))
+//       })
 
-      // numbers.sort((a, b) => a - b)
+//       // numbers.sort((a, b) => a - b)
 
-      // console.log('....names', names, numbers.length)
-      const content = contentsEn.find((c) => c.name === names)
-      console.log('....', content, numbers.length, +content.length === +numbers.length)
-      if (Array.from(new Set(numbers)).length !== numbers.length || +content.length !== +numbers.length) {
-        console.log('.......', names)
-      }
+//       // console.log('....names', names, numbers.length)
+//       const content = contentsEn.find((c) => c.name === names)
+//       console.log('....', content, numbers.length, +content.length === +numbers.length)
+//       if (Array.from(new Set(numbers)).length !== numbers.length || +content.length !== +numbers.length) {
+//         console.log('.......', names)
+//       }
       
-    })
-    result.has = true
-  })
+//     })
+//     result.has = true
+//   })
 
-  // console.log('....contentsCn', contentsCn)
+//   // console.log('....contentsCn', contentsCn)
   
-})
+// })
