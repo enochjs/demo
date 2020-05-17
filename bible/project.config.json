@@ -1,0 +1,16 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "bible",
+	"description": "simple bible book",
+	"appid": "wx20eec0fbd53c8d84",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"condition": {}
+}

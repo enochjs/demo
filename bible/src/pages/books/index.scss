@@ -1,0 +1,52 @@
+.book-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  .at-article {
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    &.active {
+      z-index: 10;  
+    }
+    .at-article__p {
+      white-space: pre-wrap;
+      word-break: keep-all;
+    }
+  }
+  .book-tab-bar {
+    padding: 20rpx;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    opacity: 0.75;
+    background-color: #f1e5c9;
+  }
+  .at-tab-bar__item--active {
+    font-weight: bold;
+  }
+  .audio {
+    position: relative;
+    padding-top: 30px;
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+    }
+    .audio-control {
+      display: flex;
+      .left {
+        flex: 2;
+      }
+      .at-col-8 {
+        flex: 8;
+      }
+      .right {
+        flex: 2;
+      }
+    }
+  }
+}

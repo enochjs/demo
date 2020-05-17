@@ -1,0 +1,15 @@
+.audio-control {
+  display: flex;
+  padding: 10rpx 0;
+  text-align: center;
+  color: #ba2f31;
+  .left {
+    flex: 2;
+  }
+  .center {
+    flex: 8;
+  }
+  .right {
+    flex: 2;
+  }
+}
