@@ -1,13 +1,14 @@
-const PromiseTs = require('./index.js')
+const Promise = require('./dist/index')
 
-console.log('......', PromiseTs)
 
 module.exports = {
     resolved: function(value) {
-        return PromiseTs.resolve(value);
+        return Promise.resolve(value);
     },
     rejected: function(reason) {
-        return PromiseTs.reject(reason);
+        return Promise.reject(reason);
     },
-    deferred: PromiseTs.deferred
+    deferred: Promise.deferred
 };
+
+// console.log('....dddddd.', Promise.deferred())
