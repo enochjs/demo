@@ -1,3 +1,10 @@
+// refer 想看实现的，可以直接移步帅大神的git  https://github.com/marshalYuan/promise-es6
+// A+ https://promisesaplus.com/
+// A+翻译 https://www.ituring.com.cn/article/66566
+// https://github.com/YvetteLau/Blog/issues/2 这个实现就是毕竟一步一步A+了
+
+
+
 const PENDING = 0
 const FULFILLED = 1
 const REJECTED = 2
