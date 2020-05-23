@@ -1,4 +1,4 @@
-const Promise = require('./dist/index')
+const Promise = require('./index')
 
 
 module.exports = {
