@@ -136,6 +136,7 @@ class Promise {
           return reject(reason);
         }
       }
+      // handle(this, {onFulfilled: _onFulfilled, onRejected: _onRejected})
       setImmediate(() => handle(this, {onFulfilled: _onFulfilled, onRejected: _onRejected}))
     })
     return nextPromise

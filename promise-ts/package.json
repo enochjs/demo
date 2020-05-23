@@ -1,7 +1,5 @@
 {
   "scripts": {
-    "compile": "tsc --watch -p .",
-    "start": "node dist/index.js",
     "test": "promises-aplus-tests test_adapter.js"
   },
   "devDependencies": {
