@@ -1,5 +1,5 @@
 const PENDING = 0
-const FUFILLED = 1
+const FULFILLED = 1
 const REJECTED = 2
 
 const curry = (fn, args1) => (args2) => fn(args1, args2)
@@ -56,44 +56,24 @@ function resolve (promise, value) {
   }
 }
 
-// function fulfill(promise, value) {
-//   promise.status = FUFILLED
-//   promise.value = value
-//   finale(promise)
-// }
-
-// function reject (promise, reason) {
-//   promise.status = REJECTED
-//   promise.value = reason
-//   finale(promise)
-// }
-
-const fulfill = (promise, result) => {
-  promise._state = FULFILLED
-  promise._value = result
+function fulfill(promise, value) {
+  promise.status = FULFILLED
+  promise.value = value
   finale(promise)
 }
 
-const reject = (promise, reason) => {
-  promise._state = REJECTED
-  promise._value = reason
+function reject (promise, reason) {
+  promise.status = REJECTED
+  promise.value = reason
   finale(promise)
 }
 
-
-// function finale (promise) {
-//   if (promise.handlers) {
-//     promise.handlers.forEach(handler => {
-//       handle(promise, handler)
-//     });
-//     promise.handlers = null
-//   }
-// }
-
-const finale = (promise) => {
-  if (promise._handlers) {
-      promise._handlers.forEach(curry(handle, promise))
-      promise._handlers = null
+function finale (promise) {
+  if (promise.handlers) {
+    promise.handlers.forEach(handler => {
+      handle(promise, handler)
+    });
+    promise.handlers = null
   }
 }
 
@@ -101,10 +81,13 @@ function handle (promise, handler) {
   switch (promise.status) {
     case PENDING:
       promise.handlers.push(handler)
-    case FUFILLED:
+      return
+    case FULFILLED:
       isFunction(handler.onFulfilled) && handler.onFulfilled(promise.value)
+      return
     case REJECTED: 
       isFunction(handler.onRejected) && handler.onRejected(promise.value)
+      return
   }
 }
 
@@ -113,21 +96,19 @@ class Promise {
   constructor(handler) {
     if (!isFunction(handler))
      throw new TypeError(`Promise resolver ${handler} is not a function`);
-
-    this.value = ''
+    this.value = null
     this.status = PENDING
     this.handlers = []
     doResolve(handler, curry(resolve, this), curry(reject, this))
   }
 
   then(onFulfilled, onRejected) {
-    // let res = null;
-    // const handle = {}
+    let res = null;
     const nextPromise = new Promise((resolve, reject) => {
       const _onFulfilled = (value) => {
         if (isFunction(onFulfilled)) {
           try {
-            const res = onFulfilled(value);
+            res = onFulfilled(value);
             if (res === nextPromise) {
               return reject(new TypeError('The `promise` and `x` refer to the same object.'));
             }
@@ -143,7 +124,7 @@ class Promise {
       const _onRejected = (reason) => {
         if (isFunction(onRejected)) {
           try {
-            const res = onRejected(reason)
+            res = onRejected(reason)
             if (res === nextPromise) {
               return reject(new TypeError('The `promise` and `x` refer to the same object.'));
             }
@@ -165,63 +146,63 @@ class Promise {
   }
 
   delay(ms, val) {
-      return this.then((ori) => Promise.delay(ms, val || ori))
+    return this.then((ori) => Promise.delay(ms, val || ori))
   }
 
   finally(f) {
-      return this.then(
-              (value) => Promise.resolve(f()).then(()=>value), 
-              (reason)=>Promise.reject(f()).then(()=>{throw reason}))
+    return this.then(
+      (value) => Promise.resolve(f()).then(()=>value), 
+      (reason)=>Promise.reject(f()).then(()=>{throw reason}))
   }
 
   static all(promises){
     if (!isIterable(promises)) {
-        throw new TypeError('ArgumentsError: argument should be iterable.')
+      throw new TypeError('ArgumentsError: argument should be iterable.')
     }
     const len = promises.length
     return len === 0 ? Promise.resolve([]) : new Promise(function(resolve, reject) {
-        const results = new Array(len)
-        let resolved = 0
+      const results = new Array(len)
+      let resolved = 0
 
-        for (let i = 0; i < len; i++) {
-            (function(i) {
-                promise = promises[i]
-                if (!(promise instanceof Promise)) {
-                    promise = Promise.resolve(promise)
-                }
-                promise.catch(function(reason) {
-                    reject(reason)
-                });
-                promise.then(function(value) {
-                    results[i] = value
-                    if (++resolved === len) {
-                        resolve(results)
-                    }
-                })
-            })(i)
-        }
+      for (let i = 0; i < len; i++) {
+        (function(i) {
+          promise = promises[i]
+          if (!(promise instanceof Promise)) {
+            promise = Promise.resolve(promise)
+          }
+          promise.catch(function(reason) {
+            reject(reason)
+          });
+          promise.then(function(value) {
+            results[i] = value
+            if (++resolved === len) {
+              resolve(results)
+            }
+          })
+        })(i)
+      }
     })
 }
 
   static race(promises) {
     if (!isIterable(promises)) {
-        throw new TypeError('ArgumentsError: argument should be iterable.')
+      throw new TypeError('ArgumentsError: argument should be iterable.')
     }
     const deferred = Promise.deferred()
     const len = promises.length
     for (let i = 0; i < len; i++) {
-        promise = promises[i];
-        if (promise instanceof Promise) {
-            promise.then(function(value) {
-                deferred.resolve(value);
-            }, function(reason) {
-                deferred.reject(reason);
-            });
-        } else {
-            // if not promise, immediately resolve result promise
-            deferred.resolve(promise);
-            break;
-        }
+      promise = promises[i];
+      if (promise instanceof Promise) {
+        promise.then(function(value) {
+          deferred.resolve(value);
+        }, function(reason) {
+          deferred.reject(reason);
+        });
+      } else {
+        // if not promise, immediately resolve result promise
+        deferred.resolve(promise);
+        break;
+      }
     }
     return deferred.promise
   }
@@ -229,8 +210,8 @@ class Promise {
   static deferred() {
     const deferred = {}
     deferred.promise = new Promise((resolve,reject) => {
-        deferred.resolve = resolve
-        deferred.reject = reject
+      deferred.resolve = resolve
+      deferred.reject = reject
     });
     return deferred
   }
@@ -242,11 +223,11 @@ class Promise {
 
 
   static reject(reason) {
-      return new Promise((resolve, reject) => reject(reason))
+    return new Promise((resolve, reject) => reject(reason))
   }
 
   static delay(ms, ...args){
-      return new Promise((resolve, reject) => setTimeout(() => resolve(...args), ms))
+    return new Promise((resolve, reject) => setTimeout(() => resolve(...args), ms))
   }
 
 }
