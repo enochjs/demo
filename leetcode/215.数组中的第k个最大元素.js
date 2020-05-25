@@ -12,8 +12,31 @@
  */
 var findKthLargest = function(nums, k) {
   quichSort(nums)
+  console.log(nums)
   return nums[k - 1]
 };
+
+function partition(nums, left, right) {
+  let storeIndex = left + 1
+  for (let i = left + 1; i <= right; i++) {
+    if (nums[i] > nums[left]) {
+      swap(nums, i, storeIndex)
+      storeIndex += 1
+    }
+  }
+  swap(nums, left, storeIndex - 1)
+  return storeIndex - 1
+}
+
+function quichSort(nums, left, right) {
+  const leftIndex = left === undefined ? 0 : left
+  const rightIndex = right === undefined ? nums.length - 1 : right
+  if(leftIndex < rightIndex) {
+    const partitionIndex = partition(nums, leftIndex, rightIndex)
+    quichSort(nums, leftIndex, partitionIndex - 1)
+    quichSort(nums, partitionIndex + 1, rightIndex)
+  }
+}
 
 function swap (arr, i, j) {
   if (i === j) return;
@@ -22,28 +45,7 @@ function swap (arr, i, j) {
   arr[j] = temp
 }
 
-function partition (arr, left, right) {
-  let index = left + 1
-  for (let i = left + 1; i < arr.length; i++) {
-    if (arr[i] > arr[left]) {
-      swap(arr, i, index)
-      index ++
-    }
-  }
-  swap(arr, left, index - 1)
-  return index - 1
-}
-
-
-function quichSort(arr, left, right) {
-  const leftIndex = left === undefined ? 0 : left
-  const rightIndex = right === undefined ? arr.length - 1 : right
-  if (leftIndex < rightIndex) {
-    const partitionIndex = partition(arr, leftIndex, rightIndex)
-    quichSort(arr, left, partitionIndex - 1)
-    quichSort(arr, partitionIndex + 1, right)
-  }
-}
+findKthLargest([3,2,1,5,6,4], 2)
 
 // @lc code=end
 
