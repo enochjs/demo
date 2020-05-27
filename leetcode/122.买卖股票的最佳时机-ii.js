@@ -20,4 +20,3 @@ var maxProfit = function(prices) {
 };
 
 // @lc code=end
-
