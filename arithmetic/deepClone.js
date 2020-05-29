@@ -108,33 +108,3 @@ function deepClone(target) {
   }
   return result
 }
-
-// const input = [{
-//   name: 1111,
-//   setName: () => {},
-//   date: new Date(),
-//   test: [{
-//     name: 'test',
-//     setName: () => { console.log(1111) },
-//     date: new Date(),
-//     test2: {
-//       name: 'test2',
-//       height: 'number',
-//       date: new Date(),
-//       setName: (name) => { console.log(name) },
-//       reg: /^\d+$/,
-//     },
-//   }]
-// }]
-
-// const result = deepClone(input)
-// result[0].test[0].test2.setName(3232323)
-// console.log('........', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
-// result[0].test[0].test2.date.setFullYear('2018')
-// console.log('modify name', input[0].test[0].test2.setName)
-// console.log('........result', JSON.stringify(result, '\n', 2), JSON.stringify(input, '\n', 2))
-
-
-
-
-// ========================================================= proxy clone =========================================
