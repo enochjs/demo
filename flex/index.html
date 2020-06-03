@@ -5,97 +5,279 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-.container {
-  font-family: arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-}
+    h3 {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e88024;
+    }
+    .primary {
+      color: #e88024;
+    }
+    .container-direction {
+      display: flex;
+    }
+    .container-direction .direction {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin: 10px;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .container-direction .direction .row {
+      display: flex;
+      flex-direction: row;
+    }
+    .container-direction .direction .row-reverse {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    .container-direction .direction .column {
+      display: flex;
+      flex-direction: column;
+    }
+    .container-direction .direction .column-reverse {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .container-direction .direction .item {
+      text-align: center;
+      background-color: #e88024;
+      flex: 0 0 50px;
+      margin: 10px;
+    }
+    .title {
+      width: 100%;
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+    .no-wrap {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .wrap .item, .no-wrap .item, .wrap-reverse .item {
+      flex:  0 0 200px;
+      text-align: center;
+      background-color: #e88024;
+      margin: 10px;
+    }
+    .wrap {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .wrap-reverse {
+      display: flex;
+      flex-wrap: wrap-reverse;
+    }
 
-.flex {
-  background: #6AB6D8;
-  padding: 10px;
-  margin-bottom: 50px;
-  border: 3px solid #2E86BB;
-  color: white;
-  font-size: 20px;
-  text-align: center;
-  position: relative;
-}
-
-.flex:after {
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 100%;
-  margin-top: 10px;
-  width: 100%;
-  color: #333;
-  font-size: 18px;
-}
-
-.flex1 {
-  flex-basis: auto;
-}
-
-.flex1:after {
-  content: 'auto';
-}
-
-.flex2 {
-  flex-basis: max-content;
-}
-
-.flex2:after {
-  content: 'max-content';
-}
-
-.flex3 {
-  flex-basis: min-content;
-}
-
-.flex3:after {
-  content: 'min-content';
-}
-
-.flex4 {
-  flex-basis: fit-content;
-}
-
-.flex4:after {
-  content: 'fit-content';
-}
-
-.flex5 {
-   flex-basis: content;
-}
-
-.flex5:after {
-  content: 'content';
-}
-
-.flex6 {
-  flex-basis: fill;
-}
-
-.flex6:after {
-  content: 'fill/-webkit-fill-available/-moz-available';
-}
+    .justify-content-flex-start {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .justify-content-flex-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .justify-content-center {
+      display: flex;
+      justify-content: center;
+    }
+    .justify-content-space-around {
+      display: flex;
+      justify-content: space-around;
+    }
+    .justify-content .item {
+      text-align: center;
+      background-color: #e88024;
+      flex: 0 0 50px;
+      margin: 10px;
+    }
+    .justify-content-space-between {
+      display: flex;
+      justify-content: space-between;
+    }
+    .align-items-flex-start {
+      display: flex;
+      align-items: flex-start;
+    }
+    .align-items-flex-end {
+      display: flex;
+      align-items: flex-end;
+    }
+    .align-items-center {
+      display: flex;
+      align-items: center;
+    }
+    .align-items-stretch {
+      height: 200px;
+      display: flex;
+      align-items: stretch;
+    }
+    .align-items-baseline {
+      display: flex;
+      align-items: baseline;
+    }
+    .align-items .item {
+      flex: 1;
+      margin: 10px;
+      background-color: #e88024;
+    }
+    .align-items .item1 {
+      height: 50px;
+    }
+    .align-items .item2 {
+      height: 150px;
+    }
+    .align-items .item3 {
+      height: 100px;
+    }
+    .align-items .item3 {
+      height: 200px;
+    }
   </style>
 </head>
 <body>
-  <ul class="container">
-    <li class="flex flex1">1: flex-basis test</li>
-    <li class="flex flex2">2: flex-basis test</li>
-    <li class="flex flex3">3: flex-basis test</li>
-    <li class="flex flex4">4: flex-basis test</li>
-    <li class="flex flex5">5: flex-basis test</li>
-  </ul>
-  
-  <ul class="container">
-    <li class="flex flex6">6: flex-basis test</li>
-  </ul>
+  <h3 class="primary">flex-direction 决定主轴的方向</h3>
+  <div class="container-direction">
+    <div class="direction">
+      <div class="title primary">flex-direction: row</div>
+      <div class="row">
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+      </div>
+    </div>
+    <div class="direction">
+      <div class="title primary">flex-direction: row-reverse</div>
+      <div class="row-reverse">
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+      </div>
+    </div>
+    <div class="direction">
+      <div class="title primary">flex-direction: column</div>
+      <div class="column">
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+      </div>
+    </div>
+    <div class="direction">
+      <div class="title primary">flex-direction: column-reverse</div>
+      <div class="column-reverse">
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+      </div>
+    </div>
+  </div>
+  <h3 class="primary">flex-wrap 默认情况下，项目都排在一条线（又称"轴线"）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。</h3>
+  <div class="title primary">flex-wrap: nowrap</div>
+  <div class="no-wrap">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+  </div>
+  <div class="title primary">flex-wrap: wrap</div>
+  <div class="wrap">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+  </div>
+  <div class="title primary">flex-wrap: wrap-reverse</div>
+  <div class="wrap-reverse">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+  </div>
+  <h3 class="primary">justify-content属性定义了项目在主轴上的对齐方式。</h3>
+  <div class="title primary">justify-content: flex-start</div>
+  <div class="justify-content justify-content-flex-start">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+  <div class="title primary">justify-content: flex-end</div>
+  <div class="justify-content justify-content-flex-end">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+  <div class="title primary">justify-content: center</div>
+  <div class="justify-content justify-content-center">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+  <div class="title primary">justify-content: space-around</div>
+  <div class="justify-content justify-content-space-around">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <div class="title primary">justify-content: space-between</div>
+  <div class="justify-content justify-content-space-between">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h3 class="primary">align-items属性定义项目在交叉轴上对齐方式。</h3>
+  <div class="title primary">align-items: flex-start</div>
+  <div class="align-items align-items-flex-start">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+  </div>
+  <div class="title primary">align-items: flex-end</div>
+  <div class="align-items align-items-flex-end">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+  </div>
+  <div class="title primary">align-items: center</div>
+  <div class="align-items align-items-center">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+  </div>
+  <div class="title primary">align-items: stretch</div>
+  <div class="align-items align-items-stretch">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+  </div>
+  <div class="title primary">align-items: baseline</div>
+  <div class="align-items align-items-baseline">
+    <div class="item item1" style="font-size: 20px;">1</div>
+    <div class="item item2" style="font-size: 40px;">2</div>
+    <div class="item item3" style="font-size: 60px;">3</div>
+    <div class="item item4" style="font-size: 100px;">4</div>
+  </div>
 </body>
 </html>
