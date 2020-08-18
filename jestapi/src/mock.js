@@ -1,0 +1,17 @@
+// mockFn.getMockName()
+// mockFn.mock.calls
+// mockFn.mock.results
+// mockFn.mock.instances
+// mockFn.mockClear()
+// mockFn.mockReset()
+// mockFn.mockRestore()
+// mockFn.mockImplementation(fn)
+// mockFn.mockImplementationOnce(fn)
+// mockFn.mockName(value)
+// mockFn.mockReturnThis()
+// mockFn.mockReturnValue(value)
+// mockFn.mockReturnValueOnce(value)
+// mockFn.mockResolvedValue(value)
+// mockFn.mockResolvedValueOnce(value)
+// mockFn.mockRejectedValue(value)
+// mockFn.mockRejectedValueOnce(value)
