@@ -21,5 +21,3 @@ export class Users {
         return fetch('/users.json').then(resp => resp.json())
     }
 }
-  
-  export default Users;

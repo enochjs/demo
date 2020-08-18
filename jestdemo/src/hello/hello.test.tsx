@@ -26,9 +26,10 @@ it('render hello with name or not', () => {
     })
     expect(container.textContent).toBe('嘿，陌生人')
 
+    expect(container).toMatchSnapshot()
     act(() => {
         render(<Hello name="enochjs" />, { container })
     })
     expect(container.textContent).toBe('你好，enochjs！')
-    
+    expect(container).toMatchSnapshot()
 })
