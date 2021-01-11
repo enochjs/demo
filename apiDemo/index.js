@@ -13,6 +13,21 @@ var apiRouter = new Router()
 
 apiRouter.get('/test', async (ctx, next) => {
   // ctx.router available
+  console.log('ctx.query', ctx.query);
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(1111)
+    }, 1000)
+  })
+  ctx.body = {
+    data: `hello ${ctx.query.name}`,
+    st: 0
+  }
+});
+
+apiRouter.post('/test', async (ctx, next) => {
+  // ctx.router available
+  console.log('ctx.query', ctx.body);
   await new Promise((resolve) => {
     setTimeout(() => {
       resolve(1111)
@@ -60,7 +75,7 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(3000, () => {
-  console.log('success at http://localhost:3000')
+app.listen(7777, () => {
+  console.log('success at http://localhost:7777')
 });
 

@@ -30,8 +30,19 @@ function renderHtml (req, res, next) {
           <link rel='stylesheet' href='/5000/css/style.css'>
           <script defer src="/2000/js/common.js"></script>
           <script async src="/1000/js/main.js"></script>
+          <style>
+            .name {
+              width: 100px;
+              height: 100px;
+              background-color: red;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+          </style>
         </head>
         <body>
+          <div id="name"></div>
           <img src="/10000/res/lion.jpg" />
           
           <h1>I am first!</h1>
