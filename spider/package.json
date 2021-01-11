@@ -8,6 +8,6 @@
     "superagent": "^5.2.2"
   },
   "devDependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   }
 }
