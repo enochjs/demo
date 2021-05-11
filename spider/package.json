@@ -3,7 +3,7 @@
     "ali-oss": "^6.8.0",
     "aliyun-sdk": "^1.12.3",
     "co": "^4.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "puppeteer": "^3.0.4",
     "superagent": "^5.2.2"
   },
