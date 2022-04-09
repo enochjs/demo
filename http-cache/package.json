@@ -9,7 +9,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "md5": "^2.2.1",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
