@@ -3,7 +3,7 @@
     "start": "nodemon src/index.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.1"
   },
   "devDependencies": {
